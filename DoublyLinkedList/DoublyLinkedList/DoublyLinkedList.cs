@@ -53,6 +53,37 @@ namespace DoublyLinkedList
         }
         public void AddAt(int position, T value)
         {
+            if(Head.Value == null)
+            {
+                Head.Value = value;
+            }
+            else
+            {
+                Node<T> current = Head;
+                for(int i = 0; i < position; i++)
+                {
+                    current = current.Next;
+                }
+                current.Next.Next = current.Next;
+                current.Next.Value = value;
+                current.Next.Next.Previous = current.Next;
+            }
+        }
+        public bool RemoveFromFront()
+        {
+            if (Head != null)
+            { 
+                Head = Head.Next;
+                Head.Previous = null;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool RemoveFromEnd()
+        {
 
         }
     }
