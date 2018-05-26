@@ -84,7 +84,18 @@ namespace DoublyLinkedList
         }
         public bool RemoveFromEnd()
         {
+            if(Head == null)
+            {
+                return false;
+            }
+            else
+            {
+                Node<T> current = Head;
+                while(current.Next != null)
+                {
 
+                }
+            }
         }
     }
 
