@@ -21,7 +21,7 @@ namespace DoublyLinkedList
 
         public void AddToEnd(T value)
         {
-            if (Head.Value == null)
+            if (Head == null)
             {
                 Head = new Node<T>();
                 Head.Value = value;
@@ -36,6 +36,10 @@ namespace DoublyLinkedList
                 current.Next = new Node<T>();
                 current.Next.Value = value;
                 current.Next.Previous = current;
+                while(current.Previous != null)
+                {
+                    current = current.Previous;
+                }
                 Head = current;
             }
             Count++;
@@ -66,11 +70,7 @@ namespace DoublyLinkedList
             }
             else
             {
-                if(Head == null)
-                {
-                    Head = new Node<T>();
-                    Head.Value = value;
-                }
+
                 Node<T> current = Head;
                 for (int i = 0; i < position; i++)
                 {
@@ -92,6 +92,7 @@ namespace DoublyLinkedList
                     current.Next.Next.Previous = current.Next;
                 }
                 Head = current;
+                Head = Head.Previous;
             }
             Count++;
         }
@@ -100,7 +101,11 @@ namespace DoublyLinkedList
             if (Head != null)
             {
                 Head = Head.Next;
-                Head.Previous = null;
+                if (Head != null)
+                {
+                    Head.Previous = null;
+                }
+               
                 Count--;
                 return true;
             }
@@ -124,6 +129,10 @@ namespace DoublyLinkedList
                 }
                 current.Next = null;
                 Head = current;
+                while(Head.Previous != null)
+                {
+                    Head = Head.Previous;
+                }
                 Count--;
                 return true;
             }
@@ -138,8 +147,12 @@ namespace DoublyLinkedList
             {
                 if (position == 0)
                 {
-                    this.RemoveFromFront();
-                    Count--;
+                    RemoveFromFront();                
+                    return true;
+                }
+                else if (position + 1 == Count)
+                {
+                    RemoveFromEnd();                    
                     return true;
                 }
                 else
@@ -160,6 +173,10 @@ namespace DoublyLinkedList
                         }
                         current.Next = current.Next.Next;
                         current.Next.Previous = current;
+                        while(current.Previous != null)
+                        {
+                            current = current.Previous;
+                        }
                         Head = current;
                         Count--;
                         return true;
